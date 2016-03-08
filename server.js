@@ -59,7 +59,7 @@ app.get('/', function(req, res) {
 })
 
 // API ROUTES
-app.get("/hero/:id", function(req, res) {
+app.get("/api/hero/:id", function(req, res) {
   db.collection(HEROES_COLLECTION).find({ "_id" : req.params.id }).limit(1).toArray(function(err, doc) {
     if(err) {
       handleError(err.message, "Failed to get contact.");
@@ -69,7 +69,7 @@ app.get("/hero/:id", function(req, res) {
   });
 });
 
-app.get("/heroes", function(req, res) {
+app.get("/api/heroes", function(req, res) {
   db.collection(HEROES_COLLECTION).find({}).toArray(function(err, docs) {
     if(err) {
       handleError(err.message, "Failed to retrieve list of heroes.");
@@ -79,7 +79,7 @@ app.get("/heroes", function(req, res) {
   })
 });
 
-app.post("/heroes", function(req, res) {
+app.post("/api/heroes", function(req, res) {
   var newHero = req.body;
 
   if(!( req.body.name )) {
