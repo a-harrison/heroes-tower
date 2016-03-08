@@ -7,6 +7,9 @@ config/db.js
 config/secret.js
 config/app.js
 
+# JS Files
+public/app/*.js
+
 # Modified files
 *~
 

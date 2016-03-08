@@ -9,8 +9,8 @@ import { Observable } from 'rxjs/Observable';
 export class HeroService{
   constructor(private http: Http) {}
 
-  private _heroesUrl = '/api/heroes';
-  private _heroUrl = '/api/hero/';
+  private _heroesUrl = '/heroes';
+  private _heroUrl = '/hero/';
 
   // Using REST API
   getHero(id : number) {
