@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc",
+    "tsc": "cd public; tsc",
     "tsc:w": "tsc -w",
-    "lite": "lite-server"
+    "lite": "lite-server",
+    "start" : "concurrent \"npm run tsc\" \"node server.js\""
   },
   "author": "aharrison",
   "license": "ISC",
@@ -15,7 +16,7 @@
       "body-parser" : "^1.13.3",
       "express" : "^4.13.3",
       "mongodb" : "^2.1.6",
-      "angular2": "2.0.0-beta.2",
+      "angular2": "2.0.0-beta.9",
       "systemjs": "0.19.6",
       "es6-promise": "^3.0.2",
       "es6-shim": "^0.33.3",
