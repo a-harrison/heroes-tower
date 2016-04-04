@@ -38,7 +38,7 @@ import { HeroDetailComponent } from './hero-detail.component';
     useAsDefault : true
   },
   {
-    path: '/detail/:id',
+    path: '/detail/:_id',
     name: 'HeroDetail',
     component: HeroDetailComponent
   }

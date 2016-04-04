@@ -17,8 +17,8 @@ export class HeroDetailComponent{
   }
 
   ngOnInit() {
-    let id = +this._routeParams.get('id');
-    this._heroService.getHero(id)
+    let _id = +this._routeParams.get('_id');
+    this._heroService.getHero(_id)
       .then(hero => this.hero = hero);
   }
 
