@@ -9,9 +9,7 @@ var dbConfig = require('./config/db.js');
 var appConfig = require('./config/app.js');
 
 // Load routes
-var heroes = require('./routes/heroes');
-
-var HEROES_COLLECTION = "heroes";
+var heroes = require('./routes/heroes.js');
 
 // CORS Middleware
 var allowCrossDomain = function(req, res, next) {
@@ -23,16 +21,14 @@ var allowCrossDomain = function(req, res, next) {
 }
 
 // Create a db variable outside of connection to reuse the connection
-var db;
+db = null;
+HEROES_COLLECTION = "heroes";
+
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(allowCrossDomain);
-
-// HEROES API ROUTES BELOW
-// Apply heroes routes
-//app.use('/heroes', heroes);
 
 // Connect to the database before starting server.
 mongodb.MongoClient.connect(dbConfig.uri, function(err, database) {
@@ -46,52 +42,19 @@ mongodb.MongoClient.connect(dbConfig.uri, function(err, database) {
   db = database;
   console.log('Database connection established successfully.');
 
+  // HEROES API ROUTES BELOW
+  // Apply heroes routes
+  app.use('/api', heroes);
+
+  // /* GET HOME PAGE */
+  // app.get('*', function(req, res) {
+  //   res.render('./index.html');
+  // })
+
   // Initialize the app.
   var server = app.listen(appConfig.port || 8080, function() {
     var port = server.address().port;
     console.log('Accepting connections on port ' + port);
-  });
-});
-
-// /* GET HOME PAGE */
-app.get('/', function(req, res) {
-  res.render('./index.html');
-})
-
-// API ROUTES
-app.get("/api/hero/:id", function(req, res) {
-  db.collection(HEROES_COLLECTION).find({ "_id" : req.params.id }).limit(1).toArray(function(err, doc) {
-    if(err) {
-      handleError(err.message, "Failed to get contact.");
-    } else {
-      res.status(200).json(doc);
-    }
-  });
-});
-
-app.get("/api/heroes", function(req, res) {
-  db.collection(HEROES_COLLECTION).find({}).toArray(function(err, docs) {
-    if(err) {
-      handleError(err.message, "Failed to retrieve list of heroes.");
-    } else {
-      res.status(200).json(docs);
-    }
-  })
-});
-
-app.post("/api/heroes", function(req, res) {
-  var newHero = req.body;
-
-  if(!( req.body.name )) {
-    handleError("Invalid user input.", "Must provide a hero name", 400);
-  }
-
-  db.collection(HEROES_COLLECTION).insertOne(newHero, function(err, doc) {
-    if(err) {
-      handleError(err.message, "Failed to insert the new hero.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
   });
 });
 
