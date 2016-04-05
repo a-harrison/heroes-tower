@@ -24,7 +24,6 @@ var allowCrossDomain = function(req, res, next) {
 db = null;
 HEROES_COLLECTION = "heroes";
 
-
 var app = express();
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
@@ -46,25 +45,12 @@ mongodb.MongoClient.connect(dbConfig.uri, function(err, database) {
   // Apply heroes routes
   app.use('/api', heroes);
 
-  // /* GET HOME PAGE */
-  // app.get('*', function(req, res) {
-  //   res.render('./index.html');
-  // })
-
   // Initialize the app.
   var server = app.listen(appConfig.port || 8080, function() {
     var port = server.address().port;
     console.log('Accepting connections on port ' + port);
   });
 });
-
-// DEBUG ONLY
-// Print out all registered routes.
-  app._router.stack.forEach(function(r){
-    if (r.route && r.route.path){
-      console.log(r.route.path)
-    }
-  });
 
 // Generic error handler used by all endpoints.
 function handleError(reason, message, code) {
