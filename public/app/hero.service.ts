@@ -16,8 +16,7 @@ export class HeroService{
   getHero(id : number) {
     return this.http.get(this._heroUrl + id)
               .toPromise()
-              .then( res => <Hero> res.json(), this.handleError)
-              .then( data => { console.log(data); return data;});
+              .then( res => <Hero> res.json(), this.handleError);
   }
 
   getHeroes() {
