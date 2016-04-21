@@ -44,6 +44,9 @@ mongodb.MongoClient.connect(dbConfig.uri, function(err, database) {
   // HEROES API ROUTES BELOW
   // Apply heroes routes
   app.use('/api', heroes);
+  app.get('/*', function(req, res) {
+    res.redirect('/');
+  });
 
   // Initialize the app.
   var server = app.listen(appConfig.port || 8080, function() {
